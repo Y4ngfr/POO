@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "Veiculos.h"
 #include "Clientes.h"
 #include "Pedidos.h"
@@ -11,7 +12,7 @@ int main()
     Cliente c1;
     Pedido p1;
 
-    v1.setAno("1992");
+    v1.setAno(1992);
     v1.setTipo("Carro");
     v1.setCapacidade(100);
     v1.setChassi("KSJ381NM4");
@@ -19,12 +20,12 @@ int main()
     v1.setModelo("Fusca");
 
     c1.setCpf("123.456.789-10");
-    c1.setId("931204549");
+    c1.setId("9312045493");
     c1.setIdade(34);
     c1.setNome("Marcos");
     c1.setRg("0123456789");
 
-    p1.setIdCliente("931204549");
+    p1.setIdCliente("9313204549");
     p1.setLocalColeta("Rua 12");
     p1.setLocalEntrega("Rua 13");
     p1.setPesoCarga(21);

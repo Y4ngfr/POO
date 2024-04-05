@@ -1,36 +1,39 @@
 #ifndef _VEICULOS_H
 #define _VEICULOS_H
 
+using namespace std;
+
 class Veiculo
 {
     private:
-        char tipo[21];
-        int capacidade;
-        char ano[5];
-        char chassi[21];
-        char modelo[21];
-        char localização[41];
+        string tipo;
+        float capacidade;
+        int ano;
+        string chassi;
+        string modelo;
+        string localização;
 
     public:
         Veiculo();
+        ~Veiculo();
 
-        char* getTipo();
-        void setTipo(const char* tipo);
+        string getTipo();
+        int setTipo(const string tipo);
 
-        int getCapacidade();
-        void setCapacidade(int capacidade);
+        float getCapacidade();
+        int setCapacidade(float capacidade);
 
-        char* getAno();
-        void setAno(const char* ano);
+        int getAno();
+        int setAno(int ano);
 
-        char* getChassi();
-        void setChassi(const char* chassi);
+        string getChassi();
+        int setChassi(const string chassi);
 
-        char* getModelo();
-        void setModelo(const char* modelo);
+        string getModelo();
+        int setModelo(const string modelo);
 
-        char* getLocalização();
-        void setLocalização(const char* localização);
+        string getLocalização();
+        int setLocalização(const string localização);
 };    
 
 #endif

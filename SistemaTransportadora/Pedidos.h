@@ -1,36 +1,39 @@
 #ifndef _PEDIDOS_H
 #define _PEDIDOS_H
 
+using namespace std;
+
 class Pedido
 {
     private:
-        char idCliente[10];
-        char tipoTransporte[40];
-        char localColeta[40];
-        char localEntrega[40];
-        int pesoCarga;
-        int volumeCarga;
+        string idCliente;
+        string tipoTransporte;
+        string localColeta;
+        string localEntrega;
+        float pesoCarga;
+        float volumeCarga;
 
     public:
         Pedido();
+        ~Pedido();
 
-        char* getIdCliente();
-        void setIdCliente(const char* idCliente);
+        string getIdCliente();
+        int setIdCliente(const string idCliente);
 
-        char* getTipoTransporte();
-        void setTipoTransporte(const char* tipoTransporte);
+        string getTipoTransporte();
+        int setTipoTransporte(const string tipoTransporte);
 
-        char* getLocalColeta();
-        void setLocalColeta(const char* localColeta);
+        string getLocalColeta();
+        int setLocalColeta(const string localColeta);
 
-        char* getLocalEntrega();
-        void setLocalEntrega(const char* localEntrega);
+        string getLocalEntrega();
+        int setLocalEntrega(const string localEntrega);
 
-        int getPesoCarga();
-        void setPesoCarga(int pesoCarga);
+        float getPesoCarga();
+        int setPesoCarga(float pesoCarga);
 
-        int getVolumeCarga();
-        void setVolumeCarga(int volumeCarga);
+        float getVolumeCarga();
+        int setVolumeCarga(float volumeCarga);
 };
 
 #endif

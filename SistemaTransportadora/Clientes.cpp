@@ -1,84 +1,105 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 #include "Clientes.h"
 
 using namespace std;
 
 Cliente::Cliente()
 {
-    memset(this->id, '\0', 10);
-    memset(this->nome ,'\0', 30);
-    memset(this->rg, '\0', 11);
-    memset(this->cpf, '\0', 15);
+    this->id = "\0";
+    this->nome = "\0";
+    this->rg = "\0";
+    this->cpf = "\0";
     this->idade = 0;
 }
 
-char* Cliente::getId()
+Cliente::~Cliente()
+{
+    cout << "limpando memória.." << endl;
+}
+
+string Cliente::getId()
 {
     return this->id;
 }
-void  Cliente::setId(const char* id)
+int Cliente::setId(const string id)
 {
-    if(strlen(id) > 9){
-        cout << "Erro: o máximo de caracteres é 9" << endl;
-        return;
+    if(id.length() != 10){
+        cout << "Id deve ter 10 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->id, id);
+    this->id = id;
+
+    return 1;
 }
 
-char* Cliente::getNome()
+string Cliente::getNome()
 {
     return this->nome;
 }
-void Cliente::setNome(const char* nome)
+int Cliente::setNome(const string nome)
 {
-    if(strlen(nome) > 29){
-        cout << "Erro: o máximo de caracteres é 29" << endl;
-        return;
+    if(nome.length() > 50){
+        cout << "Nome deve ter no máximo 50 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->nome, nome);
+    this->nome = nome;
+
+    return 1;
 }
 
-char* Cliente::getRg()
+string Cliente::getRg()
 {
     return this->rg;
 }
-void Cliente::setRg(const char* rg)
+int Cliente::setRg(const string rg)
 {
-    if(strlen(rg) > 10){
-        cout << "Erro: o máximo de caracteres é 10" << endl;
-        return;
+    if(rg.length() != 10){
+        cout << "RG deve ter 10 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->rg, rg);
+    this->rg = rg;
+
+    return 1;
 }
 
-char* Cliente::getCpf()
+string Cliente::getCpf()
 {
     return this->cpf;
 }
-void Cliente::setCpf(const char* cpf)
+int Cliente::setCpf(const string cpf)
 {
-    if(strlen(cpf) > 14){
-        cout << "Erro: o máximo de caracteres é 14" << endl;
-        return;
+    if(cpf.length() != 14){
+        cout << "Cpf deve ter 14 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->cpf, cpf);
+    if(cpf[3] != '.' || cpf[7] != '.' || cpf[11] != '-'){
+        cout << "Cpf deve seguir o seguinte formato: ";
+        cout << "xxx.xxx.xxx-xx" << endl;
+        return 0;
+    }
+
+    this->cpf = cpf;
+
+    return 1;
 }
 
 int Cliente::getIdade()
 {
     return this->idade;
 }
-void Cliente::setIdade(int idade)
+int Cliente::setIdade(int idade)
 {
-    if(idade < 18){
-        cout << "É necessário ser maior de idade" << endl;
-        return;
+    if(idade < 0){
+        cout << "Idade negativa não permitida" << endl;
+        return 0;
     }
 
     this->idade = idade;
+
+    return 1;
 }

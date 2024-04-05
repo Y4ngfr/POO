@@ -1,94 +1,116 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 #include "Veiculos.h"
 
 using namespace std;
 
 Veiculo::Veiculo()
 {
-    memset(this->ano, '\0', 21);
+    this->ano = 0;
     this->capacidade = 0;
-    memset(this->chassi, '\0', 21);
-    memset(this->localização, '\0', 41);
-    memset(this->modelo, '\0', 21);
-    memset(this->tipo, '\0', 21);
+    this->chassi = "\0";
+    this->localização = "\0";
+    this->modelo = "\0";
+    this->tipo = "\0";
 }
 
-char* Veiculo::getTipo()
+Veiculo::~Veiculo()
+{
+    cout << "limpando memória.." << endl;
+}
+
+string Veiculo::getTipo()
 {
     return this->tipo;
 }
-void Veiculo::setTipo(const char* tipo)
+int Veiculo::setTipo(const string tipo)
 {
-    if(strlen(tipo) > 20){
-        cout << "Erro: máximo de caracteres é 20" << endl;
-        return;
+    if(tipo.length() > 30){
+        cout << "Tipo do veículo deve ter no máximo 30 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->tipo, tipo);
+    this->tipo = tipo;
+
+    return 1;
 }
 
-int Veiculo::getCapacidade()
+float Veiculo::getCapacidade()
 {
     return this->capacidade;
 }
-void Veiculo::setCapacidade(int capacidade)
+int Veiculo::setCapacidade(float capacidade)
 {
+    if(capacidade < 0){
+        cout << "capacidade negativa não permitida" << endl;
+        return 0;
+    }
+
     this->capacidade = capacidade;
+
+    return 1;
 }
 
-char* Veiculo::getAno()
+int Veiculo::getAno()
 {
     return this->ano;
 }
-void Veiculo::setAno(const char* ano)
+int Veiculo::setAno(int ano)
 {
-    if(strlen(ano) > 4){
-        cout << "Erro: máximo de caracteres é 4" << endl;
-        return;
+    if(ano < 0){
+        cout << "Ano negativo não permitido" << endl;
+        return 0;
     }
 
-    strcpy(this->ano, ano);
+    this->ano = ano;
+
+    return 1;
 }
 
-char* Veiculo::getChassi()
+string Veiculo::getChassi()
 {
     return this->chassi;
 }
-void Veiculo::setChassi(const char* chassi)
+int Veiculo::setChassi(const string chassi)
 {
-    if(strlen(chassi) > 20){
-        cout << "Erro: máximo de caracteres é 20" << endl;
-        return;
+    if(chassi.length() > 30){
+        cout << "Chassi deve ter no máximo 30 caracteres" << endl;
+        return 0;
     }
-    
-    strcpy(this->chassi, chassi);
+
+    this->chassi = chassi;
+
+    return 1;
 }
 
-char* Veiculo::getModelo()
+string Veiculo::getModelo()
 {
     return this->modelo;
 }
-void Veiculo::setModelo(const char* modelo)
+int Veiculo::setModelo(const string modelo)
 {
-    if(strlen(modelo) > 20){
-        cout << "Erro: máximo de caracteres é 20" << endl;
-        return;
+    if(modelo.length() > 30){
+        cout << "Modelo deve ter no máximo 30 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->modelo, modelo);
+    this->modelo = modelo;
+
+    return 1;
 }
 
-char* Veiculo::getLocalização()
+string Veiculo::getLocalização()
 {
     return this->localização;
 }
-void Veiculo::setLocalização(const char* localização)
+int Veiculo::setLocalização(const string localização)
 {
-    if(strlen(localização) > 20){
-        cout << "Erro: máximo de caracteres é 40" << endl;
-        return;
+    if(localização.length() > 50){
+        cout << "Localização deve ter no máximo 50 caracteres" << endl;
+        return 0;
     }
-    
-    strcpy(this->localização, localização);
+
+    this->localização = localização;
+
+    return 1;
 }

@@ -1,89 +1,116 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 #include "Pedidos.h"
 
 using namespace std;
 
 Pedido::Pedido()
 {
-    memset(this->idCliente, '\0', 10);
-    memset(this->tipoTransporte, '\0', 40);
-    memset(this->localColeta, '\0', 40);
-    memset(this->localEntrega, '\0', 40);
+    this->idCliente = "\0";
+    this->tipoTransporte = "\0";
+    this->localColeta = "\0";
+    this->localEntrega = "\0";
     this->pesoCarga = 0;
     this->volumeCarga = 0;
 }
 
-char* Pedido::getIdCliente()
+Pedido::~Pedido()
+{
+    cout << "limpando memória.." << endl;
+}
+
+string Pedido::getIdCliente()
 {
     return this->idCliente;
 }
-void Pedido::setIdCliente(const char* idCliente)
+int Pedido::setIdCliente(const string idCliente)
 {
-    if(strlen(idCliente) > 10){
-        cout << "Erro: o máximo de caracteres é 9" << endl;
-        return;
+    if(idCliente.length() != 10){
+        cout << "Id do cliente deve ter 10 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->idCliente, idCliente);
+    this->idCliente = idCliente;
+
+    return 1;
 }
 
-char* Pedido::getTipoTransporte()
+string Pedido::getTipoTransporte()
 {
     return this->tipoTransporte;
 }
-void Pedido::setTipoTransporte(const char* tipoTransporte)
+int Pedido::setTipoTransporte(const string tipoTransporte)
 {
-    if(strlen(tipoTransporte) > 40){
-        cout << "Erro: o máximo de caracteres é 39" << endl;
-        return;
+    if(tipoTransporte.length() > 30){
+        cout << "Tipo do transporte deve ter no máximo 30 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->tipoTransporte, tipoTransporte);
+    this->tipoTransporte = tipoTransporte;
+
+    return 1;
 }
 
-char* Pedido::getLocalColeta()
+string Pedido::getLocalColeta()
 {
     return this->localColeta;
 }
-void Pedido::setLocalColeta(const char* localColeta)
+int Pedido::setLocalColeta(const string localColeta)
 {
-    if(strlen(localColeta) > 40){
-        cout << "Erro: o máximo de caracteres é 39" << endl;
-        return;
+    if(localColeta.length() > 30){
+        cout << "Local de coleta deve ter no máximo 30 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->localColeta, localColeta);
+    this->localColeta = localColeta;
+
+    return 1;
 }
 
-char* Pedido::getLocalEntrega()
+string Pedido::getLocalEntrega()
 {
     return this->localEntrega;
 }
-void Pedido::setLocalEntrega(const char* localEntrega)
+int Pedido::setLocalEntrega(const string localEntrega)
 {
-    if(strlen(localEntrega) > 40){
-        cout << "Erro: o máximo de caracteres é 39" << endl;
-        return;
+    if(localEntrega.length() > 30){
+        cout << "Local de entrega deve ter no máximo 30 caracteres" << endl;
+        return 0;
     }
 
-    strcpy(this->localEntrega, localEntrega);
+    this->localEntrega = localEntrega;
+
+    return 1;
 }
 
-int Pedido::getPesoCarga()
+float Pedido::getPesoCarga()
 {
     return this->pesoCarga;
 }
-void Pedido::setPesoCarga(int pesoCarga)
+int Pedido::setPesoCarga(float pesoCarga)
 {
+    if(pesoCarga < 0){
+        cout << "Peso negativo não permitido" << endl;
+        return 0;
+    }
+
     this->pesoCarga = pesoCarga;
+
+    return 1;
 }
 
-int Pedido::getVolumeCarga()
+float Pedido::getVolumeCarga()
 {
     return this->pesoCarga;
 }
-void Pedido::setVolumeCarga(int volumeCarga)
+int Pedido::setVolumeCarga(float volumeCarga)
 {
+    if(volumeCarga < 0){
+        cout << "Volume negatico não permitido" << endl;
+        return 0;
+    }
+
     this->volumeCarga = volumeCarga;
+
+    return 1;
 }

@@ -1,32 +1,35 @@
 #ifndef _CLIENTES_H
 #define _CLIENTES_H
 
+using namespace std;
+
 class Cliente
 {
     private:
-        char id[10];
-        char nome[30];
-        char rg[11];
-        char cpf[15];
+        string id;
+        string nome;
+        string rg;
+        string cpf;
         int idade;
 
     public:
         Cliente();
+        ~Cliente();
 
-        char* getId();
-        void setId(const char* id);
+        string getId();
+        int setId(const string id);
 
-        char* getNome();
-        void setNome(const char* nome);
+        string getNome();
+        int setNome(const string nome);
 
-        char* getRg();
-        void setRg(const char* rg);
+        string getRg();
+        int setRg(const string rg);
 
-        char* getCpf();
-        void setCpf(const char* cpf);
+        string getCpf();
+        int setCpf(const string cpf);
 
         int getIdade();
-        void setIdade(int idade);
+        int setIdade(int idade);
 };
 
 #endif
