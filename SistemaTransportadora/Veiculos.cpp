@@ -6,17 +6,35 @@ using namespace std;
 
 Veiculo::Veiculo()
 {
+    this->placa = "\0";
     this->ano = 0;
     this->capacidade = 0;
     this->chassi = "\0";
     this->localização = "\0";
     this->modelo = "\0";
     this->tipo = "\0";
+    this->disponibilidade = 1;
 }
 
 Veiculo::~Veiculo()
 {
     cout << "limpando memória.." << endl;
+}
+
+string Veiculo::getPlaca()
+{
+    return this->placa;
+}
+int Veiculo::setPlaca(const string placa)
+{
+    if(placa.length() != 7){
+        cout << "Placa deve ter 7 caracteres" << endl;
+        return 0;
+    }
+
+    this->placa = placa;
+
+    return 1;
 }
 
 string Veiculo::getTipo()
@@ -111,6 +129,26 @@ int Veiculo::setLocalização(const string localização)
     }
 
     this->localização = localização;
+
+    return 1;
+}
+
+int Veiculo::getDisponibilidade()
+{
+    return this->disponibilidade;
+}
+int Veiculo::setDisponibilidade(const int disponibilidade)
+{
+    if(disponibilidade > 0){
+        this->disponibilidade = 1;
+    }
+    else if(disponibilidade == 0){
+        this->disponibilidade = 0;
+    }
+    else{
+        cout << "Valor para disponibilidade inválido" << endl;
+        return 0;
+    }
 
     return 1;
 }

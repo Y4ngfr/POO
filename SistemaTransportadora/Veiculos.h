@@ -5,17 +5,22 @@ using namespace std;
 
 class Veiculo
 {
-    private:
+    protected:
+        string placa;
         string tipo;
         float capacidade;
         int ano;
         string chassi;
         string modelo;
         string localização;
+        int disponibilidade;
 
     public:
         Veiculo();
         ~Veiculo();
+
+        string getPlaca();
+        int setPlaca(const string placa);
 
         string getTipo();
         int setTipo(const string tipo);
@@ -34,6 +39,9 @@ class Veiculo
 
         string getLocalização();
         int setLocalização(const string localização);
+
+        int getDisponibilidade();
+        int setDisponibilidade(const int disponibilidade);
 };    
 
 #endif
