@@ -13,19 +13,21 @@ using namespace std;
 class ListaVeiculos
 {
     private:
-        list<Veiculo> *lista;
+        list<Veiculo*> *lista;
 
     public:
         ListaVeiculos();
         ~ListaVeiculos();
-        void adicionarVeiculo(Veiculo *veiculo, int indice);
-        void adicionarVeiculo(int indice);
-        int removerVeiculo(int indice);
+        void adicionarVeiculo(Veiculo *veiculo, const int indice);
+        void adicionarVeiculo(const int indice);
+        int removerVeiculo(const int indice);
         Veiculo* buscarVeiculo(const string placa);
-        Veiculo* buscarVeiculo(int indice);
-        ListaVeiculos* filtrarPorLocalização(const string localização);
+        Veiculo* buscarVeiculo(const int indice);
+        ListaVeiculos* filtrarPorLocalizacao(const string localizacao);
         ListaVeiculos* obterVeiculosDisponiveis();
-        void imprimirLista();
+
+        friend ostream& operator<<(ostream& ostr, ListaVeiculos& veiculos);
+        friend bool operator==(const ListaVeiculos& este, const ListaVeiculos& outro);
 };
 
 #endif

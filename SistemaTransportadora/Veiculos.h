@@ -12,11 +12,24 @@ class Veiculo
         int ano;
         string chassi;
         string modelo;
-        string localização;
+        string localizacao;
         int disponibilidade;
 
     public:
+        // Construtores
         Veiculo();
+        Veiculo(    
+            const string placa,
+            const string tipo,
+            const float capacidade,
+            const int ano,
+            const string chassi,
+            const string modelo,
+            const string localizacao,
+            const int disponibilidade
+            );
+
+        // Destrutor
         ~Veiculo();
 
         string getPlaca();
@@ -37,11 +50,14 @@ class Veiculo
         string getModelo();
         int setModelo(const string modelo);
 
-        string getLocalização();
-        int setLocalização(const string localização);
+        string getLocalizacao();
+        int setLocalizacao(const string localizacao);
 
         int getDisponibilidade();
         int setDisponibilidade(const int disponibilidade);
+
+        friend ostream& operator<<(ostream& ostr, Veiculo& veiculo);
+        friend bool operator==(const Veiculo& este, const Veiculo& outro);
 };    
 
 #endif

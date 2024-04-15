@@ -7,7 +7,7 @@ using namespace std;
 
 ListaVeiculos::ListaVeiculos()
 {
-    this->lista = new list<Veiculo>;
+    this->lista = new list<Veiculo*>;
 }
 
 ListaVeiculos::~ListaVeiculos()
@@ -15,53 +15,55 @@ ListaVeiculos::~ListaVeiculos()
     delete lista;
 }
 
-void ListaVeiculos::adicionarVeiculo(Veiculo* veiculo, int indice)
+void ListaVeiculos::adicionarVeiculo(Veiculo* veiculo, const int indice)
 {
     if(indice == INICIO)
     {
-        this->lista->push_back(*(veiculo));
+        this->lista->push_front(veiculo);
     }
     else if(indice == FINAL)
     {
-        this->lista->push_front(*(veiculo));
+        this->lista->push_back(veiculo);
     }
     else
     {
-        list<Veiculo>::iterator position;
+        list<Veiculo*>::iterator position;
         int aux;
 
         position = this->lista->begin();
 
         for(aux = 0; aux < indice; aux++, position++);
         
-        this->lista->insert(position, *(veiculo));
+        this->lista->insert(position, veiculo);
     }
 }
 
-void ListaVeiculos::adicionarVeiculo(int indice)
+void ListaVeiculos::adicionarVeiculo(const int indice)
 {
+    Veiculo* novoVeiculo = new Veiculo();
+
     if(indice == INICIO)
     {
-        this->lista->emplace_front();
+        this->lista->push_front(novoVeiculo);
     }
     else if(indice == FINAL)
     {
-        this->lista->emplace_back();
+        this->lista->push_back(novoVeiculo);
     }
     else
     {
-        list<Veiculo>::iterator position;
+        list<Veiculo*>::iterator position;
         int aux;
 
         position = this->lista->begin();
 
         for(aux = 0; aux < indice; aux++, position++);
 
-        this->lista->emplace(position);
+        this->lista->insert(position, novoVeiculo);
     }
 }
 
-int ListaVeiculos::removerVeiculo(int indice)
+int ListaVeiculos::removerVeiculo(const int indice)
 {
     if(this->lista->size() == 0){
         return 0;
@@ -77,7 +79,7 @@ int ListaVeiculos::removerVeiculo(int indice)
     }
     else
     {
-        list<Veiculo>::iterator position;
+        list<Veiculo*>::iterator position;
         int aux;
 
         position = this->lista->begin();
@@ -92,33 +94,33 @@ int ListaVeiculos::removerVeiculo(int indice)
 
 Veiculo* ListaVeiculos::buscarVeiculo(const string placa)
 {
-    list<Veiculo>::iterator it;
+    list<Veiculo*>::iterator it;
     Veiculo* ptr;
 
     for(it = this->lista->begin(); it != this->lista->end(); it++)
     {
-        if(it->getPlaca() == placa){
+        if((*it)->getPlaca() == placa){
             break;
         }
     }
     
-    ptr = &(*it);
+    ptr = *it;
 
     return ptr;
 }
 
-Veiculo* ListaVeiculos::buscarVeiculo(int indice)
+Veiculo* ListaVeiculos::buscarVeiculo(const int indice)
 {
-    list<Veiculo>::iterator it;
+    list<Veiculo*>::iterator it;
     Veiculo* ptr;
     int aux;
 
     if(indice == INICIO){
-        ptr = &(*this->lista->begin());
+        ptr = *(this->lista->begin());
         return ptr;
     }
     else if(indice == FINAL){
-        ptr = &(this->lista->back());
+        ptr = this->lista->back();
         return ptr;
     }
 
@@ -126,16 +128,16 @@ Veiculo* ListaVeiculos::buscarVeiculo(int indice)
 
     for(aux = 0; aux < indice; aux++, it++);
 
-    ptr = &(*it);
+    ptr = *it;
 
     return ptr;
     
 }
 
-ListaVeiculos* ListaVeiculos::filtrarPorLocalização(const string localização)
+ListaVeiculos* ListaVeiculos::filtrarPorLocalizacao(const string localizacao)
 {
     ListaVeiculos *listaFiltrada;
-    list<Veiculo>::iterator it;
+    list<Veiculo*>::iterator it;
     Veiculo *aux;
 
     listaFiltrada = new ListaVeiculos;
@@ -147,9 +149,9 @@ ListaVeiculos* ListaVeiculos::filtrarPorLocalização(const string localização
 
     for(it = this->lista->begin(); it != this->lista->end(); it++)
     {
-        if(it->getLocalização() == localização)
+        if((*it)->getLocalizacao() == localizacao)
         {
-            aux = &(*it);
+            aux = *it;
             listaFiltrada->adicionarVeiculo(aux, INICIO);
         }
     }
@@ -160,7 +162,7 @@ ListaVeiculos* ListaVeiculos::filtrarPorLocalização(const string localização
 ListaVeiculos* ListaVeiculos::obterVeiculosDisponiveis()
 {
     ListaVeiculos* veiculosDisponiveis;
-    list<Veiculo>::iterator it;
+    list<Veiculo*>::iterator it;
     Veiculo* aux;
 
     veiculosDisponiveis = new ListaVeiculos;
@@ -170,11 +172,13 @@ ListaVeiculos* ListaVeiculos::obterVeiculosDisponiveis()
         return nullptr;
     }
 
+    it = this->lista->begin();
+
     for(it = this->lista->begin(); it != this->lista->end(); it++)
     {
-        if(it->getDisponibilidade() == 1)
+        if((*it)->getDisponibilidade() == 1)
         {
-            aux = &(*it);
+            aux = *it;
             veiculosDisponiveis->adicionarVeiculo(aux, INICIO);
         }
     }
@@ -182,24 +186,57 @@ ListaVeiculos* ListaVeiculos::obterVeiculosDisponiveis()
     return veiculosDisponiveis;
 }
 
-void ListaVeiculos::imprimirLista()
+ostream& operator<<(ostream& ostr, ListaVeiculos& veiculos)
 {
-    list<Veiculo>::iterator it;
+    list<Veiculo*>::iterator it;
     int indice;
 
     indice = 0;
 
-    if(lista->size() == 0){
-        cout << "Lista Vazia" << endl;
-        return;
+    if(veiculos.lista->size() == 0){
+        ostr << "Lista Vazia" << endl;
+        return ostr;
     }
 
-    for(it = this->lista->begin(); it != this->lista->end(); it++, indice++)
+    for(it = veiculos.lista->begin(); it != veiculos.lista->end(); it++, indice++)
     {
-        cout << "Veiculo [" << indice << "]" << endl;
-        cout << "       Placa: " << it->getPlaca() << endl;
-        cout << "       Disponibilidade: " << it->getDisponibilidade() << endl;
-        cout << "       Localização: " << it->getLocalização() << endl;
-        cout << "       Modelo: " << it->getModelo() << endl;
+        ostr << "Veiculo [" << indice << "]" << endl;
+        ostr << "       Placa: " << (*it)->getPlaca() << endl;
+        ostr << "       Disponibilidade: " << (*it)->getDisponibilidade() << endl;
+        ostr << "       Localizacao: " << (*it)->getLocalizacao() << endl;
+        ostr << "       Tipo: " << (*it)->getTipo() << endl;
+        ostr << "       Modelo: " << (*it)->getModelo() << endl;
     }
+
+    return ostr;
+}
+
+bool operator==(const ListaVeiculos& este, const ListaVeiculos& outro)
+{
+    list<Veiculo*>::iterator iteradorEste;
+    list<Veiculo*>::iterator iteradorOutro;
+    int tamanhoLista, iteradorNumerico;
+
+    if(este.lista->size() != outro.lista->size()){
+        return false;
+    }
+
+    tamanhoLista = este.lista->size();
+
+    iteradorEste = este.lista->begin();
+    iteradorOutro = outro.lista->begin();
+    iteradorNumerico = 0;
+
+    while(iteradorNumerico < tamanhoLista)
+    {
+        if(!(*iteradorEste == *iteradorOutro)){
+            return false;
+        }
+
+        iteradorEste++;
+        iteradorOutro++;
+        iteradorNumerico++;
+    }
+
+    return true;
 }

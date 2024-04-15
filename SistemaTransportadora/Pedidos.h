@@ -14,7 +14,18 @@ class Pedido
         float volumeCarga;
 
     public:
+        // Construtor
         Pedido();
+        Pedido(
+            string idCliente,
+            string tipoTransporte,
+            string localColeta,
+            string localEntrega,
+            float pesoCarga,
+            float volumeCarga
+        );
+
+        // Destrutor
         ~Pedido();
 
         string getIdCliente();
@@ -34,6 +45,9 @@ class Pedido
 
         float getVolumeCarga();
         int setVolumeCarga(float volumeCarga);
+
+        friend ostream& operator<<(ostream& ostr, Pedido& pedido);
+        friend bool operator==(const Pedido& este, const Pedido& outro);
 };
 
 #endif

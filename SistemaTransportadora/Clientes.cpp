@@ -13,6 +13,21 @@ Cliente::Cliente()
     this->idade = 0;
 }
 
+Cliente::Cliente(
+    string id,
+    string nome,
+    string rg,
+    string cpf,
+    int idade
+)
+{
+    this->id = id;
+    this->nome = nome;
+    this->rg = rg;
+    this->cpf = cpf;
+    this->idade = idade;
+}
+
 Cliente::~Cliente()
 {
     cout << "limpando memória.." << endl;
@@ -102,4 +117,30 @@ int Cliente::setIdade(int idade)
     this->idade = idade;
 
     return 1;
+}
+
+ostream& operator<<(ostream& ostr, const Cliente& cliente)
+{
+    ostr << "Cpf: " << cliente.cpf << endl;
+    ostr << "Id: " << cliente.id << endl;
+    ostr << "Idade: " << cliente.idade << endl;
+    ostr << "Nome: " << cliente.nome << endl;
+    ostr << "Rg: " << cliente.rg << endl;
+
+    return ostr;
+}
+
+bool operator==(const Cliente& este, const Cliente& outro)
+{
+    if(
+        este.cpf == outro.cpf &&
+        este.id == outro.id &&
+        este.idade == outro.idade &&
+        este.nome == outro.nome &&
+        este.rg == outro.rg
+    ){
+        return true;
+    }
+
+    return false;
 }

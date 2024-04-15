@@ -10,10 +10,31 @@ Veiculo::Veiculo()
     this->ano = 0;
     this->capacidade = 0;
     this->chassi = "\0";
-    this->localização = "\0";
+    this->localizacao = "\0";
     this->modelo = "\0";
     this->tipo = "\0";
     this->disponibilidade = 1;
+}
+
+Veiculo::Veiculo(
+    const string placa,
+    const string tipo,
+    const float capacidade, 
+    const int ano, 
+    const string chassi, 
+    const string modelo, 
+    const string localizacao, 
+    const int disponibilidade
+    )
+{
+    this->placa = placa;
+    this->ano = ano;
+    this->capacidade = capacidade;
+    this->chassi = chassi;
+    this->localizacao = localizacao;
+    this->modelo = modelo;
+    this->tipo = tipo;
+    this->disponibilidade = disponibilidade;
 }
 
 Veiculo::~Veiculo()
@@ -117,18 +138,18 @@ int Veiculo::setModelo(const string modelo)
     return 1;
 }
 
-string Veiculo::getLocalização()
+string Veiculo::getLocalizacao()
 {
-    return this->localização;
+    return this->localizacao;
 }
-int Veiculo::setLocalização(const string localização)
+int Veiculo::setLocalizacao(const string localizacao)
 {
-    if(localização.length() > 50){
-        cout << "Localização deve ter no máximo 50 caracteres" << endl;
+    if(localizacao.length() > 50){
+        cout << "Localizacao deve ter no máximo 50 caracteres" << endl;
         return 0;
     }
 
-    this->localização = localização;
+    this->localizacao = localizacao;
 
     return 1;
 }
@@ -151,4 +172,35 @@ int Veiculo::setDisponibilidade(const int disponibilidade)
     }
 
     return 1;
+}
+
+ostream& operator<<(ostream& ostr, Veiculo& veiculo)
+{
+    ostr << "Ano: " << veiculo.getAno() << endl;
+    ostr << "Tipo: " << veiculo.getTipo() << endl;
+    ostr << "Capacidade: " << veiculo.getCapacidade() << endl;
+    ostr << "Chassi: " << veiculo.getChassi() << endl;
+    ostr << "Localização: " << veiculo.getLocalizacao() << endl;
+    ostr << "Modelo: " << veiculo.getModelo() << endl;
+    ostr << "Disponibilidade: " << veiculo.getDisponibilidade() << endl;
+
+    return ostr;
+}
+
+bool operator==(const Veiculo& este, const Veiculo& outro)
+{
+    if(
+        este.ano == outro.ano &&
+        este.capacidade == outro.capacidade &&
+        este.chassi == outro.chassi &&
+        este.disponibilidade == outro.disponibilidade &&
+        este.localizacao == outro.localizacao &&
+        este.modelo == outro.modelo &&
+        este.placa == outro.placa &&
+        este.tipo == outro.tipo
+    ){
+        return true;
+    }
+
+    return false;
 }

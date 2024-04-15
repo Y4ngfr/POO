@@ -13,7 +13,17 @@ class Cliente
         int idade;
 
     public:
+        // Construtores
         Cliente();
+        Cliente(
+            string id,
+            string nome,
+            string rg,
+            string cpf,
+            int idade
+        );
+
+        // destrutor
         ~Cliente();
 
         string getId();
@@ -30,6 +40,9 @@ class Cliente
 
         int getIdade();
         int setIdade(int idade);
+
+        friend ostream& operator<<(ostream& ostr, const Cliente& cliente);
+        friend bool operator==(const Cliente& este, const Cliente& outro);
 };
 
 #endif

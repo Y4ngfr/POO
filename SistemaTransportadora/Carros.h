@@ -12,7 +12,21 @@ class Carro : public Veiculo
         string motor;
 
     public:
+        // construtores
         Carro();
+        Carro(
+            const string placa,
+            const float capacidade,
+            const int ano,
+            const string chassi,
+            const string modelo,
+            const string localizacao,
+            const int disponibilidade,
+            const string combustivel, 
+            const string motor
+            );
+
+        // destrutor
         ~Carro();
 
         string getCombustivel();
@@ -20,6 +34,9 @@ class Carro : public Veiculo
 
         string getMotor();
         int setMotor(string motor);
+
+        friend ostream& operator<<(ostream& ostr, Carro& carro);
+        friend bool operator==(const Carro& este, const Carro& outro);
 };
 
 #endif

@@ -14,6 +14,23 @@ Pedido::Pedido()
     this->volumeCarga = 0;
 }
 
+Pedido::Pedido(
+    string idCliente,
+    string tipoTransporte,
+    string localColeta,
+    string localEntrega,
+    float pesoCarga,
+    float volumeCarga
+)
+{
+    this->idCliente = idCliente;
+    this->tipoTransporte = tipoTransporte;
+    this->localColeta = localColeta;
+    this->localEntrega = localEntrega;
+    this->pesoCarga = pesoCarga;
+    this->volumeCarga = volumeCarga;
+}
+
 Pedido::~Pedido()
 {
     cout << "limpando memória.." << endl;
@@ -113,4 +130,32 @@ int Pedido::setVolumeCarga(float volumeCarga)
     this->volumeCarga = volumeCarga;
 
     return 1;
+}
+
+ostream& operator<<(ostream& ostr, Pedido& pedido)
+{
+    ostr << "Id do cliente: " << pedido.getIdCliente() << endl;
+    ostr << "Local de coleta: " << pedido.getLocalColeta() << endl;
+    ostr << "Local de entrega: " << pedido.getLocalEntrega() << endl;
+    ostr << "Peso da carga: " << pedido.getPesoCarga() << endl;
+    ostr << "Tipo do transporte: " << pedido.getTipoTransporte() << endl;
+    ostr << "Volume da carga: " << pedido.getVolumeCarga() << endl;
+
+    return ostr;
+}
+
+bool operator==(const Pedido& este, const Pedido& outro)
+{
+    if(
+        este.idCliente == outro.idCliente &&
+        este.localColeta == outro.localColeta &&
+        este.localEntrega == outro.localEntrega &&
+        este.pesoCarga == este.pesoCarga &&
+        este.tipoTransporte == este.tipoTransporte &&
+        este.volumeCarga == este.volumeCarga
+    ){
+        return true;
+    }
+
+    return false;
 }
