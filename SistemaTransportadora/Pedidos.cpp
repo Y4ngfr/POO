@@ -56,6 +56,8 @@ int Pedido::setId(const string id)
     }
 
     this->id = id;
+
+    return 1;
 }
 
 string Pedido::getIdCliente()
@@ -188,12 +190,15 @@ int Pedido::setOrdem(const int ordem)
 
 ostream& operator<<(ostream& ostr, Pedido& pedido)
 {
+    ostr << "Id :" << pedido.getId() << endl;
     ostr << "Id do cliente: " << pedido.getIdCliente() << endl;
+    ostr << "Id do veículo: " << pedido.getIdVeiculo() << endl;
     ostr << "Local de coleta: " << pedido.getLocalColeta() << endl;
     ostr << "Local de entrega: " << pedido.getLocalEntrega() << endl;
     ostr << "Peso da carga: " << pedido.getPesoCarga() << endl;
     ostr << "Tipo do transporte: " << pedido.getTipoTransporte() << endl;
     ostr << "Volume da carga: " << pedido.getVolumeCarga() << endl;
+    ostr << "Ordem: " << pedido.getOrdem() << endl;
 
     return ostr;
 }
@@ -201,12 +206,15 @@ ostream& operator<<(ostream& ostr, Pedido& pedido)
 bool operator==(const Pedido& este, const Pedido& outro)
 {
     if(
+        este.id == outro.id &&
         este.idCliente == outro.idCliente &&
+        este.idVeiculo == outro.idVeiculo &&
         este.localColeta == outro.localColeta &&
         este.localEntrega == outro.localEntrega &&
-        este.pesoCarga == este.pesoCarga &&
-        este.tipoTransporte == este.tipoTransporte &&
-        este.volumeCarga == este.volumeCarga
+        este.pesoCarga == outro.pesoCarga &&
+        este.tipoTransporte == outro.tipoTransporte &&
+        este.volumeCarga == outro.volumeCarga &&
+        este.ordem == outro.ordem
     ){
         return true;
     }

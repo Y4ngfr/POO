@@ -7,6 +7,7 @@
 #include "Carros.h"
 #include "Motos.h"
 #include "ListaVeiculos.h"
+#include "Logistica.h"
 
 using namespace std;
 
@@ -27,16 +28,19 @@ int main()
     ListaVeiculos *veiculos;
     ListaVeiculos *veiculosDisponiveis;
 
+    Logistica *logistica1;
+
     // Inicializando Veículos
     veiculo = new Veiculo("BRAOS17", "Carro", 100, 1992, "KSJ381NM4", "Fiat", "24.08, 32.56", 1);
     caminhao = new Caminhao("376FF12", 139.54, 2001, "SJNC3823", "VUC", "12.99, 14.15", 1, 2155.90, "6x4");
     carro = new Carro("SBL4771", 43.2, 2013, "KIROP43L", "Fiat", "12.03, 13.4", 0, "Gasolina", "80 CV");
     moto = new Moto("IVX4H97", 10, 2013, "PCION389C", "Honda", "24.67, 45.78", 1, "Flex", "300 cilindradas", "City");
     moto2 = new Moto("IVX4H97", 10, 2013, "PCION389C", "Honda", "11.11, 11.12", 1, "Flex", "300 cilindradas", "City");
+    logistica1 = new Logistica();
 
     // Inicializando Clientes e Pedidos
     cliente = new Cliente("9312045493", "Marcos", "0123456789", "123.456.789-10", 34);
-    pedido = new Pedido("9313204549", "Terreno", "13.14, 23.55", "45.32, 67.89", 21, 345);
+    pedido = new Pedido("1234567890", "9313204549", "1234567", "Terreno", "13.14, 23.55", "45.32, 67.89", 21, 345, 0);
 
     // Inicializando lista de veículos
     veiculos = new ListaVeiculos();

@@ -3,6 +3,10 @@
 
 using namespace std;
 
+#include <list>
+#include "Pedidos.h"
+#include "ListaVeiculos.h"
+
 class Logistica
 {
     private:
