@@ -20,6 +20,8 @@ class Logistica
         int adicionarPedido(Pedido* pedido);
         int removerPedido(const int indice);
         int atribuirVeiculos(ListaVeiculos* veiculos);
+
+    friend ostream& operator<<(ostream& ostr, Logistica& logistica);
 };
 
 #endif

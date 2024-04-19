@@ -186,6 +186,11 @@ ListaVeiculos* ListaVeiculos::obterVeiculosDisponiveis()
     return veiculosDisponiveis;
 }
 
+int ListaVeiculos::obterTamanhoLista()
+{
+    return this->lista->size();
+}
+
 ostream& operator<<(ostream& ostr, ListaVeiculos& veiculos)
 {
     list<Veiculo*>::iterator it;

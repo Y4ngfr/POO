@@ -25,6 +25,7 @@ class ListaVeiculos
         Veiculo* buscarVeiculo(const int indice);
         ListaVeiculos* filtrarPorLocalizacao(const string localizacao);
         ListaVeiculos* obterVeiculosDisponiveis();
+        int obterTamanhoLista();
 
         friend ostream& operator<<(ostream& ostr, ListaVeiculos& veiculos);
         friend bool operator==(const ListaVeiculos& este, const ListaVeiculos& outro);

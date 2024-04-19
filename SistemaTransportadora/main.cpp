@@ -36,7 +36,6 @@ int main()
     carro = new Carro("SBL4771", 43.2, 2013, "KIROP43L", "Fiat", "12.03, 13.4", 0, "Gasolina", "80 CV");
     moto = new Moto("IVX4H97", 10, 2013, "PCION389C", "Honda", "24.67, 45.78", 1, "Flex", "300 cilindradas", "City");
     moto2 = new Moto("IVX4H97", 10, 2013, "PCION389C", "Honda", "11.11, 11.12", 1, "Flex", "300 cilindradas", "City");
-    logistica1 = new Logistica();
 
     // Inicializando Clientes e Pedidos
     cliente = new Cliente("9312045493", "Marcos", "0123456789", "123.456.789-10", 34);
@@ -44,6 +43,14 @@ int main()
 
     // Inicializando lista de veículos
     veiculos = new ListaVeiculos();
+
+    // Inicializando logistica
+    logistica1 = new Logistica();
+
+    logistica1->adicionarPedido(pedido);
+
+    cout << "Pedidos:" << endl;
+    cout << *logistica1 << endl;
 
     cout << "Cliente: " << endl;
     cout << *cliente << endl;
@@ -67,6 +74,7 @@ int main()
         cout << "são iguais" << endl;
     }
 
+    delete logistica1;
     delete veiculosDisponiveis;
     delete veiculos;
     delete veiculo;
