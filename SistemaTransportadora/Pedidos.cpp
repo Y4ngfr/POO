@@ -6,34 +6,56 @@ using namespace std;
 
 Pedido::Pedido()
 {
+    this->id = "\0";
     this->idCliente = "\0";
+    this->idVeiculo = "\0";
     this->tipoTransporte = "\0";
     this->localColeta = "\0";
     this->localEntrega = "\0";
     this->pesoCarga = 0;
     this->volumeCarga = 0;
+    this->ordem = 0;
 }
 
 Pedido::Pedido(
+    string id,
     string idCliente,
+    string idVeiculo,
     string tipoTransporte,
     string localColeta,
     string localEntrega,
     float pesoCarga,
-    float volumeCarga
-)
-{
+    float volumeCarga,
+    int ordem
+){
+    this->id = id;
     this->idCliente = idCliente;
+    this->idVeiculo = idVeiculo;
     this->tipoTransporte = tipoTransporte;
     this->localColeta = localColeta;
     this->localEntrega = localEntrega;
     this->pesoCarga = pesoCarga;
     this->volumeCarga = volumeCarga;
+    this->ordem = ordem;
 }
 
 Pedido::~Pedido()
 {
     cout << "limpando memória.." << endl;
+}
+
+string Pedido::getId()
+{
+    return this->id;
+}
+int Pedido::setId(const string id)
+{
+    if(id.length() != 10){
+        cout << "Id deve ter 10 caracteres" << endl;
+        return 0;
+    }
+
+    this->id = id;
 }
 
 string Pedido::getIdCliente()
@@ -49,6 +71,22 @@ int Pedido::setIdCliente(const string idCliente)
 
     this->idCliente = idCliente;
 
+    return 1;
+}
+
+string Pedido::getIdVeiculo()
+{
+    return this->idVeiculo;
+}
+int Pedido::setIdVeiculo(const string idVeiculo)
+{
+    if(idVeiculo.length() != 7){
+        cout << "Id veículo deve ter 7 caracteres" << endl;
+        return 0;
+    }
+
+    this->idVeiculo = idVeiculo;
+    
     return 1;
 }
 
@@ -128,6 +166,22 @@ int Pedido::setVolumeCarga(float volumeCarga)
     }
 
     this->volumeCarga = volumeCarga;
+
+    return 1;
+}
+
+int Pedido::getOrdem()
+{
+    return this->ordem;
+}
+int Pedido::setOrdem(const int ordem)
+{
+    if(ordem < 0){
+        cout << "Valor negativo não permitido" << endl;
+        return 0;
+    }
+
+    this->ordem = ordem;
 
     return 1;
 }
