@@ -4,4 +4,5 @@ Certifique-se de ver os arquivos de cabeçalho de cada uma das classes para ente
 o seu propósito e funcionamento. Todos os métodos que não são Getters e Setters estão
 devidamente documentados, assim como atributos que podem não estar facilmente copreensíveis.
 As variáveis e funções estão escritas todas em português, assim como a documentação, 
-mantendo o padrão camelCase e buscando ao máximo evidenciar o seu papel no código.
+mantendo o padrão camelCase, com o início minúsculo, e buscando ao máximo evidenciar o seu
+papel no código.
