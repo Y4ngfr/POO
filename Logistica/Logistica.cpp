@@ -174,19 +174,6 @@ int Logistica::atribuirVeiculos(ListaVeiculos* veiculos)
             }    
         }
 
-        for(iteradorVeiculos = 0; iteradorVeiculos < tamanhoLista; iteradorVeiculos++)
-        {
-            aux = veiculos->buscarVeiculo(iteradorVeiculos);
-
-            if(aux->getDisponibilidade() == 1)
-            {
-                if(aux->getCapacidade() >= (*iteradorPedidos)->getPesoCarga())
-                {
-                    (*iteradorPedidos)->setIdVeiculo(aux->getPlaca());
-                }
-            }
-        }
-
         iteradorPedidos++;
     }
 
