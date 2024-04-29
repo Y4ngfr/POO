@@ -8,6 +8,7 @@
 #include "Motos/Motos.h"
 #include "ListaVeiculos/ListaVeiculos.h"
 #include "Logistica/Logistica.h"
+#include "CSVWriter.cpp"
 
 using namespace std;
 
@@ -39,7 +40,7 @@ int main()
 
     // Inicializando Clientes e Pedidos
     cliente = new Cliente("9312045493", "Marcos", "0123456789", "123.456.789-10", 34);
-    pedido = new Pedido("1234567890", "9313204549", "1234567", "13.14, 23.55", "45.32, 67.89", 21, 345, 0);
+    pedido = new Pedido("1234567890", "9313204549", "-1", "13.14, 23.55", "45.32, 67.89", 21, 345, 0);
 
     // Inicializando lista de veículos
     veiculos = new ListaVeiculos();
@@ -47,35 +48,39 @@ int main()
     // Inicializando logistica
     logistica1 = new Logistica();
 
+    Editor_de_CSV::alimentarComCSV("dados_entregas.csv", logistica1);
+
     logistica1->adicionarPedido(pedido);
+
+    logistica1->atribuirVeiculos(veiculos);
 
     cout << "Pedidos:" << endl;
     cout << *logistica1 << endl;
 
-    cout << "Cliente: " << endl;
-    cout << *cliente << endl;
-    cout << "Pedido:" << endl;
-    cout << *pedido << endl;
+    // cout << "Cliente: " << endl;
+    // cout << *cliente << endl;
+    // cout << "Pedido:" << endl;
+    // cout << *pedido << endl;
 
-    veiculos->adicionarVeiculo(carro, INICIO);
-    veiculos->adicionarVeiculo(caminhao, INICIO);
-    veiculos->adicionarVeiculo(veiculo, INICIO);
-    veiculos->adicionarVeiculo(moto, INICIO);
-    veiculos->adicionarVeiculo(moto2, FINAL);
+    // veiculos->adicionarVeiculo(carro, INICIO);
+    // veiculos->adicionarVeiculo(caminhao, INICIO);
+    // veiculos->adicionarVeiculo(veiculo, INICIO);
+    // veiculos->adicionarVeiculo(moto, INICIO);
+    // veiculos->adicionarVeiculo(moto2, FINAL);
 
-    veiculosDisponiveis = veiculos->obterVeiculosDisponiveis();
+    // veiculosDisponiveis = veiculos->obterVeiculosDisponiveis();
     
-    cout << "Veículos:" << endl;
-    cout << *veiculos << endl;
-    cout << "Veículos disponíveis:" << endl;
-    cout << *veiculosDisponiveis << endl;
+    // cout << "Veículos:" << endl;
+    // cout << *veiculos << endl;
+    // cout << "Veículos disponíveis:" << endl;
+    // cout << *veiculosDisponiveis << endl;
 
-    if(*(veiculos->buscarVeiculo(INICIO)) == *(veiculos->buscarVeiculo(FINAL))){
-        cout << "são iguais" << endl;
-    }
+    // if(*(veiculos->buscarVeiculo(INICIO)) == *(veiculos->buscarVeiculo(FINAL))){
+    //     cout << "são iguais" << endl;
+    // }
 
     delete logistica1;
-    delete veiculosDisponiveis;
+    // delete veiculosDisponiveis;
     delete veiculos;
     delete veiculo;
     delete carro;

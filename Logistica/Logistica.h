@@ -1,11 +1,13 @@
 #ifndef _LOGISTICA_H
 #define _LOGISTICA_H
 
-using namespace std;
-
+#include <iostream>
+#include <array>
 #include <list>
 #include "../Pedidos/Pedidos.h"
 #include "../ListaVeiculos/ListaVeiculos.h"
+
+using namespace std;
 
 /**
  * Classe responsável por gerenciar os pedidos dos clientes, utilize
@@ -43,6 +45,9 @@ class Logistica
          * \returns Retorna 0 caso sucesso e -1 caso falha
          */
         int atribuirVeiculos(ListaVeiculos* veiculos);
+
+        double calcular_distancia(array<double, 2> coordenadas1, array<double, 2> coordenadas2);
+        Veiculo *encontrarVeiculoIdeal(Pedido *pedido, ListaVeiculos* lista_de_veiculos, string tipo_de_veiculo);
 
     // Sobrecarga de operadores
     friend ostream& operator<<(ostream& ostr, Logistica& logistica);
