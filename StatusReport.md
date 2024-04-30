@@ -36,5 +36,8 @@ Além disso, o CSV fornecido dificultou a percepção do funcionamento do códig
 ## Adaptação do Makefile
 Além da pequena curva de aprendizado no funcionamento de um arquivo Makefile. A equipe notou que é necessário implementar parametrização do caminho de saída do arquivo binário de execução. E além disso, passar a compilar os headers, que **não estavam sendo compilados**. Dado que esse processo é bem manual e demanda certo tempo, essa atividade ainda não pôde ser realizada completamente.  
 
-- 
+## Próximos passos:
+- Refatorar os headers.
+- Refatorar o código, adaptando para fazer o que foi solicitado.
+
 </details>
