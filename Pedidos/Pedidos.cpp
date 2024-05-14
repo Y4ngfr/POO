@@ -38,7 +38,7 @@ Pedido::Pedido(
 
 Pedido::~Pedido()
 {
-    cout << "limpando memória.." << endl;
+    clog << "Limpando memória..." << endl;
 }
 
 string Pedido::getId()
@@ -48,7 +48,7 @@ string Pedido::getId()
 int Pedido::setId(const string id)
 {
     if(id.length() != 10){
-        cout << "Id deve ter 10 caracteres" << endl;
+        cerr << "Id deve ter 10 caracteres" << endl;
         return 0;
     }
 
@@ -64,7 +64,7 @@ string Pedido::getIdCliente()
 int Pedido::setIdCliente(const string idCliente)
 {
     if(idCliente.length() != 10){
-        cout << "Id do cliente deve ter 10 caracteres" << endl;
+        cerr << "Id do cliente deve ter 10 caracteres" << endl;
         return 0;
     }
 
@@ -80,7 +80,7 @@ string Pedido::getIdVeiculo()
 int Pedido::setIdVeiculo(const string idVeiculo)
 {
     if(idVeiculo.length() != 7){
-        cout << "Id veículo deve ter 7 caracteres" << endl;
+        cerr << "Id veículo deve ter 7 caracteres" << endl;
         return 0;
     }
 
@@ -96,7 +96,7 @@ string Pedido::getLocalColeta()
 int Pedido::setLocalColeta(const string localColeta)
 {
     if(localColeta.length() > 30){
-        cout << "Local de coleta deve ter no máximo 30 caracteres" << endl;
+        cerr << "Local de coleta deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -140,7 +140,7 @@ string Pedido::getLocalEntrega()
 int Pedido::setLocalEntrega(const string localEntrega)
 {
     if(localEntrega.length() > 30){
-        cout << "Local de entrega deve ter no máximo 30 caracteres" << endl;
+        cerr << "Local de entrega deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -156,7 +156,7 @@ float Pedido::getPesoCarga()
 int Pedido::setPesoCarga(float pesoCarga)
 {
     if(pesoCarga < 0){
-        cout << "Peso negativo não permitido" << endl;
+        cerr << "Peso negativo não permitido" << endl;
         return 0;
     }
 
@@ -172,7 +172,7 @@ float Pedido::getVolumeCarga()
 int Pedido::setVolumeCarga(float volumeCarga)
 {
     if(volumeCarga < 0){
-        cout << "Volume negatico não permitido" << endl;
+        cerr << "Volume negatico não permitido" << endl;
         return 0;
     }
 
@@ -188,7 +188,7 @@ int Pedido::getOrdem()
 int Pedido::setOrdem(const int ordem)
 {
     if(ordem < 0){
-        cout << "Valor negativo não permitido" << endl;
+        cerr << "Valor negativo não permitido" << endl;
         return 0;
     }
 
@@ -207,6 +207,7 @@ ostream& operator<<(ostream& ostr, Pedido& pedido)
     ostr << "Peso da carga: " << pedido.getPesoCarga() << endl;
     ostr << "Volume da carga: " << pedido.getVolumeCarga() << endl;
     ostr << "Ordem: " << pedido.getOrdem() << endl;
+    ostr << endl;
 
     return ostr;
 }

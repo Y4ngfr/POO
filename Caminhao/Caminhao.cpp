@@ -39,7 +39,7 @@ float Caminhao::getPeso()
 int Caminhao::setPeso(float peso)
 { 
     if(peso < 0){
-        cout << "Peso negativo não permitido\n" << endl;
+        cerr << "Peso negativo não permitido" << endl;
         return 0;
     }
 
@@ -56,7 +56,7 @@ int Caminhao::setTracao(string tracao)
 { 
     if(tracao != "6x2" && tracao != "6x4" && tracao != "8x2" && tracao != "8x4")
     {
-        cout << "valor para tracao inválido" << endl;
+        cerr << "Valor para tracao inválido" << endl;
 
         return 0;
     }
@@ -77,6 +77,7 @@ ostream& operator<<(ostream& ostr, Caminhao& caminhao)
     ostr << "Peso: " << caminhao.getPeso() << endl;
     ostr << "Tração: " << caminhao.getTracao() << endl;
     ostr << "Disponibilidade: " << caminhao.getDisponibilidade() << endl;
+    ostr << endl;
 
     return ostr;
 }

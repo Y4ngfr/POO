@@ -19,7 +19,7 @@ int ListaVeiculos::adicionarVeiculo(Veiculo* veiculo, const int indice)
 {
     if(veiculo == nullptr)
     {
-        cout << "Veículo inválido" << endl;
+        cerr << "Veículo inválido" << endl;
 
         return -1;
     }
@@ -47,7 +47,7 @@ int ListaVeiculos::adicionarVeiculo(Veiculo* veiculo, const int indice)
 
         for(aux = 0; aux < indice; aux++, position++){
             if(position == this->lista->end()){
-                cout << "Índice fora dos limites da lista" << endl;
+                cerr << "Índice fora dos limites da lista" << endl;
                 return -1;
             }
         }
@@ -57,7 +57,7 @@ int ListaVeiculos::adicionarVeiculo(Veiculo* veiculo, const int indice)
         return 0;
     }
 
-    cout << "Índice inválido" << endl;
+    cerr << "Índice inválido" << endl;
 
     return -1;
 }
@@ -68,7 +68,13 @@ int ListaVeiculos::adicionarVeiculo(const int indice)
 
     if(novoVeiculo == nullptr)
     {
-        cout << "Erro ao criar novo veículo" << endl;
+        cerr << "Erro ao criar novo veículo" << endl;
+
+        return -1;
+    }
+
+    if(indice < 0){
+        cerr << "Índice inválido (menor que 0)" << endl;
 
         return -1;
     }
@@ -187,7 +193,7 @@ ListaVeiculos* ListaVeiculos::filtrarPorLocalizacao(const string localizacao)
     listaFiltrada = new ListaVeiculos;
 
     if(listaFiltrada == nullptr){
-        cout << "Não foi possível alocar lista de retorno" << endl;
+        cerr << "Não foi possível alocar lista de retorno" << endl;
         return nullptr;
     }
 
@@ -212,7 +218,7 @@ ListaVeiculos* ListaVeiculos::obterVeiculosDisponiveis()
     veiculosDisponiveis = new ListaVeiculos;
 
     if(veiculosDisponiveis == nullptr){
-        cout << "Não foi possível alocar a lista de veículos disponíveis" << endl;
+        cerr << "Não foi possível alocar a lista de veículos disponíveis" << endl;
         return nullptr;
     }
 
@@ -255,6 +261,7 @@ ostream& operator<<(ostream& ostr, ListaVeiculos& veiculos)
         ostr << "       Localizacao: " << (*it)->getLocalizacao() << endl;
         ostr << "       Tipo: " << (*it)->getTipo() << endl;
         ostr << "       Modelo: " << (*it)->getModelo() << endl;
+        ostr << endl;
     }
 
     return ostr;

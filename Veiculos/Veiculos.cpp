@@ -37,7 +37,7 @@ Veiculo::Veiculo(
 
 Veiculo::~Veiculo()
 {
-    cout << "limpando memória.." << endl;
+    clog << "Limpando memória..." << endl;
 }
 
 string Veiculo::getPlaca()
@@ -47,7 +47,7 @@ string Veiculo::getPlaca()
 int Veiculo::setPlaca(const string placa)
 {
     if(placa.length() != 7){
-        cout << "Placa deve ter 7 caracteres" << endl;
+        cerr << "Placa deve ter 7 caracteres" << endl;
         return 0;
     }
 
@@ -63,7 +63,7 @@ string Veiculo::getTipo()
 int Veiculo::setTipo(const string tipo)
 {
     if(tipo.length() > 30){
-        cout << "Tipo do veículo deve ter no máximo 30 caracteres" << endl;
+        cerr << "Tipo do veículo deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -79,7 +79,7 @@ float Veiculo::getCapacidade()
 int Veiculo::setCapacidade(float capacidade)
 {
     if(capacidade < 0){
-        cout << "capacidade negativa não permitida" << endl;
+        cerr << "Capacidade negativa não permitida" << endl;
         return 0;
     }
 
@@ -95,7 +95,7 @@ int Veiculo::getAno()
 int Veiculo::setAno(int ano)
 {
     if(ano < 0){
-        cout << "Ano negativo não permitido" << endl;
+        cerr << "Ano negativo não permitido" << endl;
         return 0;
     }
 
@@ -111,7 +111,7 @@ string Veiculo::getChassi()
 int Veiculo::setChassi(const string chassi)
 {
     if(chassi.length() > 30){
-        cout << "Chassi deve ter no máximo 30 caracteres" << endl;
+        cerr << "Chassi deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -127,7 +127,7 @@ string Veiculo::getModelo()
 int Veiculo::setModelo(const string modelo)
 {
     if(modelo.length() > 30){
-        cout << "Modelo deve ter no máximo 30 caracteres" << endl;
+        cerr << "Modelo deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -172,6 +172,7 @@ ostream& operator<<(ostream& ostr, Veiculo& veiculo)
     ostr << "Localização: " << veiculo.getLocalizacao() << endl;
     ostr << "Modelo: " << veiculo.getModelo() << endl;
     ostr << "Disponibilidade: " << veiculo.getDisponibilidade() << endl;
+    ostr << endl;
 
     return ostr;
 }

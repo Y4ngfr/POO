@@ -13,7 +13,7 @@ Logistica::Logistica()
     this->filaPedidos = new list<Pedido*>;
 
     if(filaPedidos == nullptr){
-        cout << "Erro ao alocar Logisitca" << endl;
+        cerr << "Erro ao alocar Logisitca" << endl;
     }
 }
 
@@ -36,7 +36,7 @@ int Logistica::adicionarPedido(Pedido* pedido)
     list<Pedido*>::iterator it;
 
     if(pedido == nullptr){
-        cout << "Pedido inválido" << endl;
+        cerr << "Pedido inválido" << endl;
         return -1;
     }
 
@@ -87,7 +87,7 @@ int Logistica::removerPedido(int indice)
         {
             if(it == this->filaPedidos->end())
             {
-                cout << "Índice fora dos limites da lista" << endl;
+                cerr << "Índice fora dos limites da lista" << endl;
                 return -1;
             }
 
@@ -211,6 +211,7 @@ ostream& operator<<(ostream& ostr, Logistica& logistica)
         ostr << "       Id Veiculo: " << (*it)->getIdVeiculo() << endl;
         ostr << "       Local Coleta: " << (*it)->getLocalColeta() << endl;
         ostr << "       Ordem: " << (*it)->getOrdem() << endl;
+        ostr << endl;
     }
 
     return ostr;

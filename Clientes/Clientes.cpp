@@ -28,7 +28,7 @@ Cliente::Cliente(
 
 Cliente::~Cliente()
 {
-    cout << "limpando memória.." << endl;
+    clog << "Limpando memória..." << endl;
 }
 
 string Cliente::getId()
@@ -38,7 +38,7 @@ string Cliente::getId()
 int Cliente::setId(const string id)
 {
     if(id.length() != 10){
-        cout << "Id deve ter 10 caracteres" << endl;
+        cerr << "Id deve ter 10 caracteres" << endl;
         return 0;
     }
 
@@ -54,7 +54,7 @@ string Cliente::getNome()
 int Cliente::setNome(const string nome)
 {
     if(nome.length() > 50){
-        cout << "Nome deve ter no máximo 50 caracteres" << endl;
+        cerr << "Nome deve ter no máximo 50 caracteres" << endl;
         return 0;
     }
 
@@ -70,7 +70,7 @@ string Cliente::getRg()
 int Cliente::setRg(const string rg)
 {
     if(rg.length() != 10){
-        cout << "RG deve ter 10 caracteres" << endl;
+        cerr << "RG deve ter 10 caracteres" << endl;
         return 0;
     }
 
@@ -86,13 +86,13 @@ string Cliente::getCpf()
 int Cliente::setCpf(const string cpf)
 {
     if(cpf.length() != 14){
-        cout << "Cpf deve ter 14 caracteres" << endl;
+        cerr << "Cpf deve ter 14 caracteres" << endl;
         return 0;
     }
 
     if(cpf[3] != '.' || cpf[7] != '.' || cpf[11] != '-'){
-        cout << "Cpf deve seguir o seguinte formato: ";
-        cout << "xxx.xxx.xxx-xx" << endl;
+        cerr << "Cpf deve seguir o seguinte formato: ";
+        cerr << "xxx.xxx.xxx-xx" << endl;
         return 0;
     }
 
@@ -108,7 +108,7 @@ int Cliente::getIdade()
 int Cliente::setIdade(int idade)
 {
     if(idade < 0){
-        cout << "Idade negativa não permitida" << endl;
+        cerr << "Idade negativa não permitida" << endl;
         return 0;
     }
 
@@ -124,6 +124,8 @@ ostream& operator<<(ostream& ostr, const Cliente& cliente)
     ostr << "Idade: " << cliente.idade << endl;
     ostr << "Nome: " << cliente.nome << endl;
     ostr << "Rg: " << cliente.rg << endl;
+    ostr << endl;
+
 
     return ostr;
 }

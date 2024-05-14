@@ -42,7 +42,7 @@ string Moto::getCombustivel()
 int Moto::setCombustivel(const string combustivel)
 {
     if(combustivel.length() > 30){
-        cout << "Combustível deve ter no máximo 30 caracteres" << endl;
+        cerr << "Combustível deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -58,7 +58,7 @@ string Moto::getMotor()
 int Moto::setMotor(const string motor)
 {
     if(motor.length() > 30){
-        cout << "Motor deve ter no máximo 30 caracteres" << endl;
+        cerr << "Motor deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -74,7 +74,7 @@ string Moto::getCategoria()
 int Moto::setCategoria(const string categoria)
 {
     if(categoria.length() > 30){
-        cout << "Categoria deve ter no máximo 30 caracteres" << endl;
+        cerr << "Categoria deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -95,6 +95,7 @@ ostream& operator<<(ostream& ostr, Moto& moto)
     ostr << "Motor: " << moto.getMotor() << endl;
     ostr << "Categoria: " << moto.getCategoria() << endl;
     ostr << "Disponibilidade: " << moto.getDisponibilidade() << endl;
+    ostr << endl;
 
     return ostr;
 }

@@ -39,7 +39,7 @@ string Carro::getCombustivel()
 int Carro::setCombustivel(string combustivel)
 {
     if(combustivel.length() > 30){
-        cout << "Combustível deve ter no máximo 30 caracteres" << endl;
+        cerr << "Combustível deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -55,7 +55,7 @@ string Carro::getMotor()
 int Carro::setMotor(string motor)
 {
     if(motor.length() > 30){
-        cout << "Motor deve ter no máximo 30 caracteres" << endl;
+        cerr << "Motor deve ter no máximo 30 caracteres" << endl;
         return 0;
     }
 
@@ -75,6 +75,7 @@ ostream& operator<<(ostream& ostr, Carro& carro)
     ostr << "Combustível: " << carro.getCombustivel() << endl;
     ostr << "Motor: " << carro.getMotor() << endl;
     ostr << "Disponibilidade: " << carro.getDisponibilidade() << endl;
+    ostr << endl;
 
     return ostr;
 }
