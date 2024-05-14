@@ -59,7 +59,7 @@ int Logistica::adicionarPedido(Pedido* pedido)
     return 0;
 }
 
-int Logistica::removerPedido(int indice)
+int Logistica::removerPedido(const int indice, ListaVeiculos* veiculos)
 {
     list<Pedido*>::iterator it;
     int i;
@@ -95,14 +95,38 @@ int Logistica::removerPedido(int indice)
             i++;
         }
 
+        Veiculo* veiculoComPedido;
+        veiculoComPedido = veiculos->buscarVeiculo((*it)->getIdVeiculo());
+        veiculoComPedido->setCapacidade(veiculoComPedido->getCapacidade() + (*it)->getPesoCarga());
+
         this->filaPedidos->erase(it);
 
         return 0;
     }
 
-    cout << "Índice inválido" << endl;
+    cerr << "Índice inválido" << endl;
 
     return -1;
+}
+
+int Logistica::removerPedido(const string id, ListaVeiculos* veiculos){
+    list<Pedido*>::iterator it;
+    Veiculo* ptr;
+
+    for(it = this->filaPedidos->begin(); it != this->filaPedidos->end(); it++)
+    {
+        if((*it)->getId() == id){
+            Veiculo* veiculoComPedido;
+            veiculoComPedido = veiculos->buscarVeiculo((*it)->getIdVeiculo());
+            veiculoComPedido->setCapacidade(veiculoComPedido->getCapacidade() + (*it)->getPesoCarga());
+
+            this->filaPedidos->erase(it);
+            return 1;
+        }
+    }
+
+    cerr << "ID inválido." << endl;
+    return 0;
 }
 
 double Logistica::calcular_distancia(array<double, 2> coordenadas1, array<double, 2> coordenadas2)
@@ -116,41 +140,122 @@ double Logistica::calcular_distancia(array<double, 2> coordenadas1, array<double
     return distancia;
 }
 
-Veiculo *Logistica::encontrarVeiculoIdeal(Pedido *pedido, ListaVeiculos* lista_de_veiculos, string tipo_de_veiculo)
+Veiculo *Logistica::encontrarVeiculoIdeal(Pedido *pedido, ListaVeiculos* listaVeiculos, string tipoVeiculo)
 {
-    double distancia_mais_proxima = INT32_MAX;
-    Veiculo *veiculo_mais_proximo = NULL;
+    clog << "[" << pedido->getId() << "] Encontrando o veículo ideal." << endl;
+    listaVeiculos = listaVeiculos->obterVeiculosDisponiveis();
 
-    for (int i = 0; i < lista_de_veiculos->obterTamanhoLista(); i++)
-    {
-        Veiculo* veiculo = lista_de_veiculos->buscarVeiculo(i);
-        array<double, 2> c1 = GeoShell::get_coordinates(veiculo->getLocalizacao());
-        array<double, 2> c2;
+    if (listaVeiculos->obterTamanhoLista() == 0){
+        cerr << "Nenhum veiculo disponível na lista de veículos." << endl;
+        return NULL;
+    }
+
+    const array<double, 2> COORDENADA_NULA = {0, 0};
+
+    double distanciaMaisProxima = INT32_MAX;
+    Veiculo *veiculoMaisProximo = NULL;
+    
+    array<double, 2> coordenadasEntrega;
+    array<double, 2> coordenadasVeiculo;
+
+    if (pedido->getCoordenadasColeta() == COORDENADA_NULA)
+        // Tentando pegar coordenadas do pedido, se não foi possível, retorna NULL
         try{
-            c2 = GeoShell::get_coordinates(pedido->getLocalColeta());
+            coordenadasEntrega = GeoShell::get_coordinates(pedido->getLocalColeta());
+            if (coordenadasEntrega == COORDENADA_NULA)
+                throw exception();
         }
         catch (exception e){
+            cerr << "[" << pedido->getId() << "] Pedido não pôde ser alocado pois não foi possível encontrar suas coordenadas." << endl;
             return NULL;
         }
-        double distancia = this->calcular_distancia(c1, c2);
+    
+    // Buscando o veículo ideal
+    for (int i = 0; i < listaVeiculos->obterTamanhoLista(); i++)
+    {
+        Veiculo* veiculo = listaVeiculos->buscarVeiculo(i);
+
+        if (veiculo->getCoordenadas() == COORDENADA_NULA){
+            veiculo->setCoordenadas(veiculo->getLocalizacao());
+        }
+        coordenadasVeiculo = veiculo->getCoordenadas();
+
+        double distancia = this->calcular_distancia(coordenadasVeiculo, coordenadasEntrega);
 
         // Verificando de o veículo está mais longe que o mais perto
-        if (distancia > distancia_mais_proxima)
+        if (distancia > distanciaMaisProxima)
             continue;
-
         // Verificando se o veículo é de um tipo diferente
-        if (veiculo->getTipo() != tipo_de_veiculo)
+        if (veiculo->getTipo() != tipoVeiculo)
             continue;
 
         // Verificando se o veículo tem capacidade
         if ((veiculo->getCapacidade() < pedido->getPesoCarga())/* || (veiculo->get_max_load_weight() < pedido->get_load_weight())*/)
             continue;
 
-        distancia_mais_proxima = distancia;
-        veiculo_mais_proximo = veiculo;
+        distanciaMaisProxima = distancia;
+        veiculoMaisProximo = veiculo;
     }
 
-    return veiculo_mais_proximo;
+    return veiculoMaisProximo;
+}
+
+int Logistica::atribuirVeiculo(Pedido* pedido, ListaVeiculos* veiculos){
+
+    Veiculo* veiculoIdeal;
+
+    const array<double, 2> COORDENADA_NULA = {0, 0};
+
+    if (pedido->getCoordenadasColeta() == COORDENADA_NULA)
+        // Tentando pegar coordenadas do pedido, se não foi possível, retorna NULL
+        try{
+            pedido->setCoordenadasColeta(pedido->getLocalColeta());
+            if (pedido->getCoordenadasColeta() == COORDENADA_NULA)
+                throw exception();
+        }
+        catch (exception e){
+            cerr << "[" << pedido->getId() << "] Pedido não pôde ser alocado pois não foi possível encontrar suas coordenadas." << endl;
+            return 0;
+        }
+
+    if(pedido->getVolumeCarga() < 2){  
+        // Se volume menor que 2m³ então uma moto é escolhida
+        veiculoIdeal = this->encontrarVeiculoIdeal(pedido, veiculos, "Moto");
+        if (veiculoIdeal == NULL){
+            pedido->setIdVeiculo("NULL ID");
+            cerr << "[" << pedido->getId() << "] Nenhum veículo encontrado." << endl;
+        }
+        else{
+            pedido->setIdVeiculo(veiculoIdeal->getPlaca());
+            veiculoIdeal->setCapacidade(veiculoIdeal->getCapacidade() - pedido->getPesoCarga());
+        }
+    }
+    else if(pedido->getVolumeCarga() > 10)
+    {   // Se o volume maior que 10m³ então um caminhão é escolhido
+        veiculoIdeal = this->encontrarVeiculoIdeal(pedido, veiculos, "Caminhão");
+        if (veiculoIdeal == NULL){
+            pedido->setIdVeiculo("NULL ID");
+            cerr << "[" << pedido->getId() << "] Nenhum veículo encontrado." << endl;
+        }
+        else{
+            pedido->setIdVeiculo(veiculoIdeal->getPlaca());
+            veiculoIdeal->setCapacidade(veiculoIdeal->getCapacidade() - pedido->getPesoCarga());
+        }
+    }
+    else 
+    {  // Se volume > 2 e < 10 então um carro é escolhido 
+        veiculoIdeal = this->encontrarVeiculoIdeal(pedido, veiculos, "Carro");  
+        if (veiculoIdeal == NULL){
+            pedido->setIdVeiculo("NULL ID");
+            cerr << "[" << pedido->getId() << "] Nenhum veículo encontrado." << endl;
+        }
+        else{
+            pedido->setIdVeiculo(veiculoIdeal->getPlaca());
+            veiculoIdeal->setCapacidade(veiculoIdeal->getCapacidade() - pedido->getPesoCarga());
+        }
+    }
+
+    return 0;
 }
 
 int Logistica::atribuirVeiculos(ListaVeiculos* veiculos)
@@ -160,35 +265,65 @@ int Logistica::atribuirVeiculos(ListaVeiculos* veiculos)
 
     if(veiculos == nullptr)
     {
-        cout << "Lista de veículos inválida" << endl;
+        cerr << "Lista de veículos inválida" << endl;
         
         return -1;
     }
 
-    tamanhoLista = veiculos->obterTamanhoLista();
+    tamanhoLista = this->filaPedidos->size();
     iteradorPedidos = this->filaPedidos->begin();
+    int numeroPedidosAtribuidos = 0;
 
     while(iteradorPedidos != this->filaPedidos->end())
     {
-        Veiculo* aux;
-
-        if((*iteradorPedidos)->getVolumeCarga() < 2)
-        {   // Se volume menor que 2m³ então uma moto é escolhida
-            this->encontrarVeiculoIdeal((*iteradorPedidos), veiculos, "Moto") ;
-        }
-        else if((*iteradorPedidos)->getVolumeCarga() > 10)
-        {   // Se o volume maior que 10m³ então um caminhão é escolhido
-            this->encontrarVeiculoIdeal((*iteradorPedidos), veiculos, "Caminhao");
-        }
-        else 
-        {  // Se volume > 2 e < 10 então um carro é escolhido 
-            this->encontrarVeiculoIdeal((*iteradorPedidos), veiculos, "Carro");  
-        }
-
+        this->atribuirVeiculo((*iteradorPedidos), veiculos);
         iteradorPedidos++;
+
+        numeroPedidosAtribuidos++;
+        cout << "CARREGANDO... (" << numeroPedidosAtribuidos*100/tamanhoLista << "%)" << endl;
+    }
+    return 0;
+}
+
+vector<string> Logistica::listarPedidos(string idCliente, int apenasAbertos){
+    list<Pedido*>::iterator it;
+    vector<string> pedidos;
+
+    for(it = this->filaPedidos->begin(); it != this->filaPedidos->end(); it++)
+    {
+        if((*it)->getIdCliente() == idCliente){
+            pedidos.push_back((*it)->getId());
+        }
     }
 
-    return 0;
+    return pedidos;
+}
+
+vector<Pedido*> Logistica::listarPedidosVeiculo(string placa, int apenasAbertos){
+    list<Pedido*>::iterator it;
+    vector<Pedido*> pedidos;
+
+    for(it = this->filaPedidos->begin(); it != this->filaPedidos->end(); it++)
+    {
+        if((*it)->getIdVeiculo() == placa){
+            pedidos.push_back(*it);
+        }
+    }
+
+    return pedidos;
+}
+
+Pedido* Logistica::buscarPedido(string id){
+    list<Pedido*>::iterator it;
+
+    for(it = this->filaPedidos->begin(); it != this->filaPedidos->end(); it++)
+    {
+        if((*it)->getId() == id){
+            return (*it);
+        }
+    }
+
+    return nullptr;
 }
 
 ostream& operator<<(ostream& ostr, Logistica& logistica)
