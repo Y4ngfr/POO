@@ -1,6 +1,5 @@
-#include <iostream>
-#include <string>
 #include "Pedidos.h"
+#include "../GeoShell/GeoShell.hpp"
 
 using namespace std;
 
@@ -30,6 +29,7 @@ Pedido::Pedido(
     this->idCliente = idCliente;
     this->idVeiculo = idVeiculo;
     this->localColeta = localColeta;
+    this->setCoordenadasColeta(localColeta);
     this->localEntrega = localEntrega;
     this->pesoCarga = pesoCarga;
     this->volumeCarga = volumeCarga;
@@ -101,6 +101,34 @@ int Pedido::setLocalColeta(const string localColeta)
     }
 
     this->localColeta = localColeta;
+
+    return 1;
+}
+
+array<double, 2> Pedido::getCoordenadasColeta(){
+    return this->coordenadasColeta;
+}
+int Pedido::setCoordenadasColeta(const array<double, 2> coordenadasColeta){
+    this->coordenadasColeta = coordenadasColeta;
+
+    return 1;
+}
+int Pedido::setCoordenadasColeta(const string localColeta){
+    array<double, 2> COORDENADAS_NULAS = {0, 0};
+    try{
+        this->coordenadasColeta = GeoShell::get_coordinates(localColeta);
+        if (this->coordenadasColeta == COORDENADAS_NULAS){
+            throw exception();
+        }
+    }
+    catch(invalid_argument e){
+        cerr << "[" << this->getId() << "] Endereço não encontrado." << endl;
+        this->coordenadasColeta = {0, 0};
+    }
+    catch(exception e){
+        cerr << "[" << this->getId() << "] Erro ao encontrar coordenadas." << endl;
+        this->coordenadasColeta = {0, 0};
+    }
 
     return 1;
 }

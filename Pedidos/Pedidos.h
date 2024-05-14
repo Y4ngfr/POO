@@ -1,6 +1,9 @@
 #ifndef _PEDIDOS_H
 #define _PEDIDOS_H
 
+#include <iostream>
+#include <array>
+
 using namespace std;
 
 /**
@@ -16,6 +19,7 @@ class Pedido
         float volumeCarga;      /** Volume dado em metros cúbicos */
         float pesoCarga;        /** Peso dado em kg */
         string localColeta;
+        array<double, 2> coordenadasColeta;
         string localEntrega;
 
     public:
@@ -48,6 +52,10 @@ class Pedido
 
         string getLocalColeta();
         int setLocalColeta(const string localColeta);
+
+        array<double, 2> getCoordenadasColeta();
+        int setCoordenadasColeta(const array<double, 2> coordenadasColeta);
+        int setCoordenadasColeta(const string localColeta);
 
         string getLocalEntrega();
         int setLocalEntrega(const string localEntrega);
