@@ -16,11 +16,12 @@ class Veiculo
         string placa;           /** Substitui o Id convencional */
         string tipo;            /** Classe do veículo: Carro, Moto, Caminhão, etc */
         float capacidade;       /** Peso máximo suportado, medido em kg */
-        bool disponibilidade;   /** Define se o veículo poderá ser vinculado a um pedido */
         int ano;            
         string chassi;
         string modelo;
         string localizacao;
+        array<double, 2> coordenadas;
+        bool disponibilidade;   /** Define se o veículo poderá ser vinculado a um pedido */
 
     public:
         // Construtores
@@ -61,6 +62,10 @@ class Veiculo
 
         string getLocalizacao();
         int setLocalizacao(const string localizacao);
+
+        array<double, 2> getCoordenadas();
+        int setCoordenadas(const array<double, 2> coordenadas);
+        int setCoordenadas(const string coordenadas);
 
         bool getDisponibilidade();
         int setDisponibilidade(const bool disponibilidade);

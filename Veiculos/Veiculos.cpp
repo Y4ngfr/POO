@@ -1,4 +1,5 @@
 #include "Veiculos.h"
+#include "../GeoShell/GeoShell.hpp"
 
 using namespace std;
 
@@ -9,6 +10,7 @@ Veiculo::Veiculo()
     this->capacidade = 0;
     this->chassi = "\0";
     this->localizacao = "\0";
+    this->coordenadas = {0, 0};
     this->modelo = "\0";
     this->tipo = "\0";
     this->disponibilidade = true;
@@ -30,6 +32,7 @@ Veiculo::Veiculo(
     this->capacidade = capacidade;
     this->chassi = chassi;
     this->localizacao = localizacao;
+    setCoordenadas(localizacao);
     this->modelo = modelo;
     this->tipo = tipo;
     this->disponibilidade = disponibilidade;
@@ -143,11 +146,40 @@ string Veiculo::getLocalizacao()
 int Veiculo::setLocalizacao(const string localizacao)
 {
     if(localizacao.length() > 50){
-        cout << "Localizacao deve ter no máximo 50 caracteres" << endl;
+        cerr << "Localização deve ter no máximo 50 caracteres" << endl;
         return 0;
     }
 
+    try{
+        this->coordenadas = GeoShell::get_coordinates(localizacao);
+    }
+    catch (exception e){
+        this->coordenadas = {0, 0};
+    }
+
     this->localizacao = localizacao;
+
+    return 1;
+}
+
+array<double, 2> Veiculo::getCoordenadas(){
+    return this->coordenadas;
+}
+
+int Veiculo::setCoordenadas(const array<double, 2> coordenadas){
+    this->coordenadas = coordenadas;
+
+    return 1;
+}
+
+int Veiculo::setCoordenadas(const string localizacao){
+    try{
+        this->coordenadas = GeoShell::get_coordinates(localizacao);
+    }
+    catch(exception e){
+        cerr << "Erro ao encontrar coordenadas." << endl;
+        this->coordenadas = {0, 0};
+    }
 
     return 1;
 }
