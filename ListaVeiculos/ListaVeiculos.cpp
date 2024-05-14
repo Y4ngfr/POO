@@ -93,24 +93,25 @@ int ListaVeiculos::adicionarVeiculo(const int indice)
         return 0;
     }
 
-    if(indice > 0)
+    
+    list<Veiculo*>::iterator position;
+    int aux;
+
+    position = this->lista->begin();
+
+    for(aux = 0; aux < indice; aux++, position++)
     {
-        list<Veiculo*>::iterator position;
-        int aux;
+        if(position == this->lista->end()){
+            cerr << "Índice fora dos limites da lista" << endl;
 
-        position = this->lista->begin();
-
-        for(aux = 0; aux < indice; aux++, position++)
-        {
-            if(position == this->lista->end()){
-                cout << "Índice fora dos limites da lista" << endl;
-
-                return -1;
-            }
+            return -1;
         }
-
-        this->lista->insert(position, novoVeiculo);
     }
+
+    this->lista->insert(position, novoVeiculo);
+
+    return 0;
+    
 }
 
 int ListaVeiculos::removerVeiculo(const int indice)
@@ -166,13 +167,11 @@ Veiculo* ListaVeiculos::buscarVeiculo(const string placa)
     for(it = this->lista->begin(); it != this->lista->end(); it++)
     {
         if((*it)->getPlaca() == placa){
-            break;
+            return *it;
         }
     }
-    
-    ptr = *it;
 
-    return ptr;
+    return nullptr;
 }
 
 Veiculo* ListaVeiculos::buscarVeiculo(const int indice)
