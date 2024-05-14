@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include "Clientes.h"
 
 using namespace std;

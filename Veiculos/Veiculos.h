@@ -1,6 +1,9 @@
 #ifndef _VEICULOS_H
 #define _VEICULOS_H
 
+#include <iostream>
+#include <array>
+
 using namespace std;
 
 /**
