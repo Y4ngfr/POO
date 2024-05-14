@@ -50,6 +50,13 @@ class ListaVeiculos
         int removerVeiculo(const int indice);
 
         /**
+         * Remove um veículo na posição indicada
+         * \param placa Placa do veículo ao qual se quer buscar
+         * \returns Retorna 0 caso sucesso e -1 caso falha
+        */
+        int removerVeiculo(const string placa);
+
+        /**
          * Busca o veículo cuja placa é a indicada no argumento
          * \param placa Placa do veículo ao qual se quer buscar
          * \returns Retornará uma referencia para o veículo ou NULL

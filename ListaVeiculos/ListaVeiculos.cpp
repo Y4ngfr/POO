@@ -142,6 +142,22 @@ int ListaVeiculos::removerVeiculo(const int indice)
     return 1;
 }
 
+int ListaVeiculos::removerVeiculo(const string placa)
+{
+    list<Veiculo*>::iterator it;
+    Veiculo* ptr;
+
+    for(it = this->lista->begin(); it != this->lista->end(); it++)
+    {
+        if((*it)->getPlaca() == placa){
+            this->lista->erase(it);
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 Veiculo* ListaVeiculos::buscarVeiculo(const string placa)
 {
     list<Veiculo*>::iterator it;
