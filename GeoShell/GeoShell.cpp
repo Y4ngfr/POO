@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <exception>
 
 //******************************************************************//
 //**************************** FEATURES ****************************//
@@ -22,6 +23,7 @@ std::array<double, 2> GeoShell::get_coordinates(std::string location)
     // Getting file path created by GeoShell
     std::string file_name = location;
     std::replace(file_name.begin(), file_name.end(), ' ', '_');
+    std::replace(file_name.begin(), file_name.end(), '/', '_');
     std::string path = "./GeoShell/.coordinates/" + file_name;
 
     // Trying to open previous requests
@@ -51,9 +53,18 @@ std::array<double, 2> GeoShell::get_coordinates(std::string location)
     // Declaring the coordinates array
     std::array<double, 2> coordinates;
 
+    std::string tmp;
+
     // Getting coordinates
-    file >> coordinates[0];
-    file >> coordinates[1];
+    for (int i=0; i<2; i++){
+        file >> tmp;
+        try{
+            coordinates[i] = std::stod(tmp);
+        }
+        catch(...){
+            return {0, 0};
+        }
+    }
 
     // Closing file
     file.close();
